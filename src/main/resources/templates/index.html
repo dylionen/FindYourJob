@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<head th:insert="header">
 </head>
 <body>
+
+<div th:insert="navbar"></div>
+
+
 <h1 sec:authorize="isAuthenticated()">
     <h1 sec:authentication="name"> ohn!</h1>
+    <h2 sec:authentication="principal.authorities"></h2>
 
 </h1>
 

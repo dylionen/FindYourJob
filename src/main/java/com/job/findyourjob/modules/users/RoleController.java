@@ -3,6 +3,8 @@ package com.job.findyourjob.modules.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.Set;
+
 @Controller
 public class RoleController {
     @Autowired

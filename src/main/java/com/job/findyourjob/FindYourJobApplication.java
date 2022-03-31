@@ -28,13 +28,14 @@ public class FindYourJobApplication {
         UserService userService = context.getBean(UserService.class);
         RoleController roleController = context.getBean(RoleController.class);
         roleController.newRole(1L,"ADMIN","Administrator");
-        roleController.newRole(1L,"EMPLOYER","Pracodawca");
-        roleController.newRole(1L,"EMPLOYEE","Pracownik");
+        roleController.newRole(2L,"EMPLOYER","Pracodawca");
+        roleController.newRole(3L,"EMPLOYEE","Pracownik");
 
         Set<Role> roles = new HashSet<>();
         roles.add(roleController.getRole(1L));
+        roles.add(roleController.getRole(2L));
 
-        User admin = new User(1L,"admin","admin",true,"ADMIN","admin",roles);
+        User admin = new User(1L,"admin","$2a$12$pqlgwxC7C9G490XeXCT0WuP8.1KAoTdY8taQtlbatFfe0VBKv/ipS",true,"ADMIN","admin",roles);
         userService.createNewUser(admin);
     }
 
