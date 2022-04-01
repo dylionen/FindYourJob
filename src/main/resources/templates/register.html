@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:insert="fragments::head">
 
 </head>
@@ -37,7 +37,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
-                    <h1 class="text-white font-weight-bold"Login</h1>
+                    <h1 class="text-white font-weight-bold">Sign Up</h1>
                     <div class="custom-breadcrumbs">
                         <a href="#">Home</a> <span class="mx-2 slash">/</span>
                         <span class="text-white"><strong>Log In</strong></span>
@@ -50,30 +50,34 @@
     <section class="site-section">
         <div class="container align-content-center">
             <div class="row">
-
-                <div class="col-lg-6">
-                    <h2 class="mb-4">Log In To JobBoard</h2>
-                    <form action="/login" class="p-4 border rounded" method="post" th:action="@{/login}">
+                <div class="col-lg-6 mb-5">
+                    <h2 class="mb-4">Sign Up To JobBoard</h2>
+                    <form action="/register" method="post" class="p-4 border rounded">
                         <div th:if="${param.error}">
                             <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
                         </div>
-
                         <div class="row form-group">
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <label class="text-black" for="login">Login</label>
-                                <input type="text" id="login" name="username" class="form-control" placeholder="Login">
+                                <input type="text" id="login" th:name="${userRegistrationDTO.registerUserName}" class="form-control" placeholder="Login">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 mb-3 mb-md-0">
+                                <label class="text-black" for="regPass">Password</label>
+                                <input type="password" id="regPass" th:name="${userRegistrationDTO.registerUserPassword}" class="form-control" placeholder="Password">
                             </div>
                         </div>
                         <div class="row form-group mb-4">
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="text-black" for="password">Password</label>
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                                <label class="text-black" for="retype">Re-Type Password</label>
+                                <input type="password"  th:name="${userRegistrationDTO.repeatPassword}" id="retype" class="form-control" placeholder="Re-type Password">
                             </div>
                         </div>
 
                         <div class="row form-group">
                             <div class="col-md-12">
-                                <input type="submit" value="Log In" class="btn px-4 btn-primary text-white">
+                                <input type="submit" value="Sign Up" class="btn px-4 btn-primary text-white">
                             </div>
                         </div>
 

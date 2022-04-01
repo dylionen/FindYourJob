@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,13 +21,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @Column(unique = true)
     private String userName;
+    @Column(nullable = false)
     private String password;
     private Boolean active;
     //private String roles;
 
+
     private String firstName;
     private String lastName;
+    @Column(nullable = false)
+    private String mailAddress;
 
 
     private Timestamp createdDate;
@@ -41,7 +46,7 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    public User(Long id, String userName, String password, Boolean active, String firstName, String lastName, Set<Role> roles) {
+    public User(Long id, String userName, String password, Boolean active, String firstName, String lastName, String mailAddress, Set<Role> roles) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -49,6 +54,16 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.roles = roles;
+        this.mailAddress = mailAddress;
+        this.createdDate = new Timestamp(Calendar.getInstance().getTimeInMillis());
+    }
+
+    public User(UserRegistrationDTO dto, Set<Role> roles) {
+        this.userName = dto.getRegisterUserName();
+        this.password = dto.getRegisterUserPassword();
+        this.active = true;
+        this.roles = roles;
+        this.mailAddress = dto.getMailAddress();
         this.createdDate = new Timestamp(Calendar.getInstance().getTimeInMillis());
     }
 

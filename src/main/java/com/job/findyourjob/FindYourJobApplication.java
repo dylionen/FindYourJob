@@ -35,7 +35,7 @@ public class FindYourJobApplication {
         roles.add(roleController.getRole(1L));
         roles.add(roleController.getRole(2L));
 
-        User admin = new User(1L,"admin","$2a$12$pqlgwxC7C9G490XeXCT0WuP8.1KAoTdY8taQtlbatFfe0VBKv/ipS",true,"ADMIN","admin",roles);
+        User admin = new User(1L,"admin","$2a$12$pqlgwxC7C9G490XeXCT0WuP8.1KAoTdY8taQtlbatFfe0VBKv/ipS",true,"ADMIN","admin","asd@2p.pl",roles);
         userService.createNewUser(admin);
     }
 

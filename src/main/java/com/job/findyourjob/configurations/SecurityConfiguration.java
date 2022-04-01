@@ -28,11 +28,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/js**").permitAll()
+                .antMatchers("/bs4**").permitAll()
+                .antMatchers("/fonts**").permitAll()
+                .antMatchers("/images**").permitAll()
+                .antMatchers("/css**").permitAll()
+                .antMatchers("/scss**").permitAll()
                 .antMatchers("/h2**").permitAll()
-                .and().
-                formLogin().loginPage("/login")
+                .and()
+                .formLogin().loginPage("/login")
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
+
+
+        //http.authorizeRequests(requests -> requests.anyRequest().authenticated());
+        //http.formLogin(login -> login.loginPage("/login").permitAll());
 
     }
 
