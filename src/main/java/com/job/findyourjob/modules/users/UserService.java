@@ -22,11 +22,7 @@ public class UserService {
 
     @Transactional
     public void createNewUser(UserRegistrationDTO dto) {
-        System.out.println("Próba dodania");
-        System.out.println(dto);
-        // find role
         Set<Role> roleSet = new HashSet<>();
-        System.out.println(dto.getRole());
         Optional<Role> role = roleRepository.findByRoleName(dto.getRole());
         role.ifPresentOrElse(
                 r -> roleSet.add(r),
@@ -34,9 +30,16 @@ public class UserService {
                     throw new NoSuchElementException("Role not found");
                 }
         );
-
         User user = new User(dto, roleSet);
-        //user.setPassword();
         userRepository.save(user);
     }
+
+    public boolean existsByUserName(String userName) {
+        return userRepository.existsByUserName(userName);
+    }
+
+    public boolean existsByEmail(String emailAddress) {
+        return userRepository.existsByMailAddress(emailAddress);
+    }
+
 }

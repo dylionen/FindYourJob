@@ -2,9 +2,7 @@ package com.job.findyourjob.modules.users;
 
 import lombok.*;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -13,23 +11,28 @@ import javax.validation.constraints.Size;
 @ToString
 public class UserRegistrationDTO {
 
-    @NotNull
-    @Size(min = 4,max = 64)
+    @NotEmpty(message = "Username must not be empty")
+    @Size(min = 4, max = 64,message = "Username characters must have min 4 digits and max 64")
     private String userName;
 
-    @NotNull
-    @Size(min = 8,max = 64)
+    @NotEmpty(message = "Password must not be empty")
+    @Size(min = 8, max = 64,message = "Password characters must have min 8 digits and max 64")
     private String password;
 
-    @NotNull
-    @Size(min = 8,max = 64)
+    @NotEmpty(message = "Password must not be empty")
+    @Size(min = 8, max = 64,message = "Password characters must have min 8 digits and max 64")
     private String repeatPassword;
 
-    @NotNull
+    @NotEmpty(message = "Email address must not be empty")
     @Email(message = "Email should be valid")
     private String mailAddress;
 
-    @NotNull
+    @NotEmpty(message = "Role must not empty")
     private String role;
+
+    @AssertTrue(message = "Password should match")
+    public boolean isPasswordsEqual() {
+        return password.equals(repeatPassword);
+    }
 
 }

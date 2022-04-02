@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:insert="fragments::head">
 
 </head>
@@ -31,7 +32,7 @@
     </header>
 
     <!-- HOME -->
-    <section class="section-hero overlay inner-page bg-image" style="background-image: url('images/hero_1.jpg');"
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url('/images/hero_1.jpg');"
              id="home-section">
         <div class="container">
             <div class="row">
@@ -48,49 +49,57 @@
 
     <section class="site-section">
         <div class="container align-content-center">
-            <div class="row">
+            <div class="row justify-content-md-center">
                 <div class="col-lg-6 mb-5">
-                    <h2 class="mb-4">Sign Up To JobBoard</h2>
+                    <h2 class="mb-4">Sign Up To FindYourJob</h2>
                     <form th:action="@{/process_register}" method="post" class="p-4 border rounded" th:object="${user}">
+
+                        <div th:if="${#fields.hasAnyErrors()}"  class="alert alert-danger" role="alert">
+                            <ul>
+                                <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                            </ul>
+                        </div>
 
                         <div class="row form-group">
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <label class="text-black" for="login">Login</label>
                                 <input type="text" id="login" th:field="*{userName}" class="form-control" th:value="*{userName}" placeholder="Login">
-                                <p th:each="err : ${#fields.errors('userName')}" th:text="${err}" class="error" />
+
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <label class="text-black" for="regPass">Password</label>
-                                <input type="password" id="regPass" th:field="*{password}" class="form-control" placeholder="Password">
-                                <p th:errors="${user.password}">Example error</p>
+                                <input type="password" id="regPass" th:field="*{password}" th:value="*{password}" class="form-control" placeholder="Password">
+
                             </div>
                         </div>
                         <div class="row form-group mb-4">
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <label class="text-black" for="retype">Re-Type Password</label>
-                                <input type="password"  th:field="*{repeatPassword}" id="retype" class="form-control" placeholder="Re-type Password">
-                                <p th:errors="${user.repeatPassword}">Example error</p>
+                                <input type="password"  th:field="*{repeatPassword}" th:value="*{repeatPassword}" id="retype" class="form-control" placeholder="Re-type Password">
+
                             </div>
                         </div>
 
                         <div class="row form-group mb-4">
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <label class="text-black" for="mail">E-mail</label>
-                                <input type="email"  th:field="*{mailAddress}" id="mail" class="form-control" placeholder="E-mail">
+                                <input type="email"  th:field="*{mailAddress}" id="mail" th:value="*{mailAddress}" class="form-control" placeholder="E-mail">
                                 <p th:errors="${user.mailAddress}">Example error</p>
+
                             </div>
                         </div>
                         <div class="row form-group mb-4">
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <label class="text-black" for="role">Role</label>
-                                <select  th:field="*{role}" id="role" class="form-control">
+                                <select  th:field="*{role}" id="role" class="form-control" th:value="*{role}">
                                     <option value="EMPLOYEE">Employee</option>
                                     <option value="EMPLOYER">Employer</option>
                                 </select>
                             </div>
                         </div>
+
 
                         <div class="row form-group">
                             <div class="col-md-12">

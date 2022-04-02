@@ -1,6 +1,7 @@
 package com.job.findyourjob.modules.users;
 
 import lombok.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -58,7 +59,7 @@ public class User {
 
     public User(UserRegistrationDTO dto, Set<Role> roles) {
         this.userName = dto.getUserName();
-        this.password = dto.getPassword();
+        this.password = new BCryptPasswordEncoder().encode(dto.getPassword());
         this.active = true;
         this.roles = roles;
         this.mailAddress = dto.getMailAddress();

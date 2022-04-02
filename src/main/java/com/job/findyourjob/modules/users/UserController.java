@@ -1,29 +1,71 @@
 package com.job.findyourjob.modules.users;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
+import javax.validation.Valid;
 
-@RestController
-@RequestMapping("/api")
+@Controller
 public class UserController {
-    private final UserRepository userRepository;
+    @Autowired
+    UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    @GetMapping("/")
+    public String getHomePage(Authentication authentication, Model model) {
+        if (authentication != null) {
+            model.addAttribute(authentication);
+        }
+        model.addAttribute("welcomeMessage", "welcomeMessage");
+
+        return "index";
     }
 
-    @GetMapping("/users")
-    public List<User> getAllUsers(){
-        return userRepository.findAll();
+    @GetMapping("/userPanel")
+    public String userPanel(Model model){
+        return "userpanel";
     }
 
+    @GetMapping("/login")
+    public String loginForm(Model model) {
+        return "login";
+    }
 
+    @GetMapping("/register")
+    public String registerForm(Model model) {
+        UserRegistrationDTO user = new UserRegistrationDTO();
+        model.addAttribute("user", user);
+        return "signup";
+    }
 
+    @PostMapping("/process_register")
+    public String registerConfirnation(@Valid @ModelAttribute("user") UserRegistrationDTO user, BindingResult bindingResult, Model model) {
+        if (userService.existsByUserName(user.getUserName()))
+            bindingResult.rejectValue("userName", null, "Username exists!!");
 
+        if (userService.existsByEmail(user.getMailAddress()))
+            bindingResult.rejectValue("mailAddress", null, "Email exists!!");
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            return "signup";
+
+        } else {
+            userService.createNewUser(user);
+            return "index";
+        }
+    }
+
+/*
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/foradmin")
+    @ResponseBody
+    public String someMethod() {
+        return "<h1> Dla admina</h1>";
+    }*/
 }

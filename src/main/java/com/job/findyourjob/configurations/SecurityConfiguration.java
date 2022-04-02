@@ -26,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/userPanel").hasAnyAuthority("ADMIN", "EMPLOYEE", "EMPLOYER")
                 .antMatchers("/").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/js**").permitAll()
@@ -40,23 +40,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login")
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
-
-
-        //http.authorizeRequests(requests -> requests.anyRequest().authenticated());
-        //http.formLogin(login -> login.loginPage("/login").permitAll());
-
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/h2/**");
+        web.ignoring().antMatchers("/h2/**");
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
-        //return NoOpPasswordEncoder.getInstance();
     }
 }
