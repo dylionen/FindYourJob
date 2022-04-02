@@ -23,8 +23,10 @@ public class UserService {
     @Transactional
     public void createNewUser(UserRegistrationDTO dto) {
         System.out.println("Próba dodania");
+        System.out.println(dto);
         // find role
         Set<Role> roleSet = new HashSet<>();
+        System.out.println(dto.getRole());
         Optional<Role> role = roleRepository.findByRoleName(dto.getRole());
         role.ifPresentOrElse(
                 r -> roleSet.add(r),

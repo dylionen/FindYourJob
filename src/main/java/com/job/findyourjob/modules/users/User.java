@@ -1,9 +1,6 @@
 package com.job.findyourjob.modules.users;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -16,6 +13,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,8 +57,8 @@ public class User {
     }
 
     public User(UserRegistrationDTO dto, Set<Role> roles) {
-        this.userName = dto.getRegisterUserName();
-        this.password = dto.getRegisterUserPassword();
+        this.userName = dto.getUserName();
+        this.password = dto.getPassword();
         this.active = true;
         this.roles = roles;
         this.mailAddress = dto.getMailAddress();
