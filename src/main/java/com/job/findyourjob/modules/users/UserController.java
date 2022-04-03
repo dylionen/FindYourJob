@@ -26,7 +26,7 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/userPanel")
+    @GetMapping("/user")
     public String userPanel(Model model){
         return "userpanel";
     }

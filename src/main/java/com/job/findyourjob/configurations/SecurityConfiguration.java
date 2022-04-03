@@ -26,7 +26,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/userPanel").hasAnyAuthority("ADMIN", "EMPLOYEE", "EMPLOYER")
+                .antMatchers("/user/**").hasAnyAuthority("ADMIN", "EMPLOYEE", "EMPLOYER")
+                .antMatchers("/company/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
                 .antMatchers("/").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/js**").permitAll()
@@ -35,7 +36,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/images**").permitAll()
                 .antMatchers("/css**").permitAll()
                 .antMatchers("/scss**").permitAll()
-                .antMatchers("/h2**").permitAll()
                 .and()
                 .formLogin().loginPage("/login")
                 .and()

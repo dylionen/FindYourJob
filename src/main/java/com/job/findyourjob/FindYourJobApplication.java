@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackageClasses = UserRepository.class)
+//@EnableJpaRepositories(basePackageClasses = UserRepository.class)
 public class FindYourJobApplication {
 
     public static void main(String[] args) {
