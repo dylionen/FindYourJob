@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,6 +39,7 @@ public class FindYourJobApplication {
 
         User admin = new User(1L,"admin","$2a$12$pqlgwxC7C9G490XeXCT0WuP8.1KAoTdY8taQtlbatFfe0VBKv/ipS",true,"ADMIN","admin","asd@2p.pl",roles);
         userService.createNewUser(admin);
+
     }
 
 }

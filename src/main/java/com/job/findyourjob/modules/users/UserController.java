@@ -1,5 +1,7 @@
 package com.job.findyourjob.modules.users;
 
+import com.job.findyourjob.modules.companies.CompanyDTO;
+import com.job.findyourjob.modules.companies.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -10,11 +12,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    CompanyService companyService;
 
     @GetMapping("/")
     public String getHomePage(Authentication authentication, Model model) {
@@ -27,7 +33,9 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String userPanel(Model model){
+    public String userPanel(Model model, Principal principal) {
+        List<CompanyDTO> companyDTOList = companyService.getCompaniesByUserName(principal.getName());
+        model.addAttribute("companies",companyDTOList);
         return "userpanel";
     }
 

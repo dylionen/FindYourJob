@@ -42,4 +42,12 @@ public class UserService {
         return userRepository.existsByMailAddress(emailAddress);
     }
 
+    public Long getUserIdByUserName(String userName){
+        return userRepository.getUserByUserName(userName).getId();
+    }
+
+    public User getUserByUserName(String userName){
+        return userRepository.getUserByUserName(userName);
+    }
+
 }

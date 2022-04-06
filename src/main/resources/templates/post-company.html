@@ -32,23 +32,12 @@
   </header>
 
 <!-- HOME -->
-<section class="section-hero overlay inner-page bg-image" style="background-image: url('/images/hero_1.jpg');" id="home-section">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-7">
-        <h1 class="text-white font-weight-bold">Post A Company</h1>
-        <div class="custom-breadcrumbs">
-          <a href="#">Home</a> <span class="mx-2 slash">/</span>
-          <a href="#">Job</a> <span class="mx-2 slash">/</span>
-          <span class="text-white"><strong>Post a Company</strong></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <section th:insert="fragments::homeSection">
+  </section>
 
 
 <section class="site-section">
+  <form action="/company/add" th:action="@{/company/add}" method="post" th:object="${company}" id="Form">
   <div class="container">
 
     <div class="row align-items-center mb-5">
@@ -65,46 +54,53 @@
             <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>
           </div>
           <div class="col-6">
-            <a href="#" class="btn btn-block btn-primary btn-md">Save Company</a>
+            <input type="submit" class="btn btn-block btn-primary btn-md" value="Save company">
           </div>
         </div>
       </div>
     </div>
-    <form action="post-company.html" method="post" th:object="${company}">
+
+    <div th:if="${#fields.hasAnyErrors()}"  class="alert alert-danger" role="alert">
+      <ul>
+        <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+      </ul>
+    </div>
+
     <div class="row mb-5">
       <div class="col-lg-12">
-        <form class="p-4 p-md-5 border rounded" method="post">
+        <div class="p-4 p-md-5 border rounded" method="post">
           <h3 class="text-black my-5 border-bottom pb-2">Company Details</h3>
           <div class="form-group">
             <label for="company-name">Company Name</label>
-            <input type="text" th:field="*{companyName}" class="form-control" id="company-name" placeholder="e.g. New York">
+            <input type="text" th:field="*{companyName}" th:value="*{companyName}"  class="form-control" id="company-name" placeholder="e.g. New York" required>
           </div>
 
           <div class="form-group">
             <label for="company-tagline">Tagline (Optional)</label>
-            <input type="text" th:field="*{tagLine}" class="form-control" id="company-tagline" placeholder="e.g. New York">
+            <input type="text" th:field="*{tagLine}" th:value="*{tagLine}"  class="form-control" id="company-tagline" placeholder="e.g. New York">
           </div>
 
           <div class="form-group">
             <label for="company-description">Company Description (Optional)</label>
-            <div class="editor" id="editor-2" th:field="*{companyDescription}">
-              <p>Description</p>
+            <div class="editor">
+              <textarea class="form-control" style="resize: none;" rows="14" cols="50" name="body"
+                        th:field="*{companyDescription}" th:value="*{companyDescription}" id="company-description"/>
             </div>
           </div>
 
           <div class="form-group">
             <label for="company-website">Website (Optional)</label>
-            <input type="text" class="form-control" th:field="*{companyWebsite}" id="company-website" placeholder="https://">
+            <input type="text" class="form-control" th:field="*{companyWebsite}" th:value="*{companyWebsite}" id="company-website" placeholder="https://">
           </div>
 
           <div class="form-group">
             <label for="company-website-fb">Facebook Username (Optional)</label>
-            <input type="text" class="form-control" th:field="*{companyWebsiteFb}" id="company-website-fb" placeholder="companyname">
+            <input type="text" class="form-control" th:field="*{companyWebsiteFb}" th:value="*{companyWebsiteFb}" id="company-website-fb" placeholder="companyname">
           </div>
 
           <div class="form-group">
             <label for="company-website-tw">Twitter Username (Optional)</label>
-            <input type="text" class="form-control"  th:field="*{companyWebsiteTw}" id="company-website-tw" placeholder="@companyname">
+            <input type="text" class="form-control"  th:field="*{companyWebsiteTw} "th:value="*{companyWebsiteTw}"  id="company-website-tw" placeholder="@companyname">
           </div>
           <div class="form-group">
             <label for="company-website-li">Linkedin Username (Optional)</label>
@@ -114,11 +110,11 @@
           <div class="form-group">
             <label for="company-website-tw d-block">Upload Logo</label> <br>
             <label class="btn btn-primary btn-md btn-file">
-              Browse File<input type="file" th:field="*{logo}">
+              Browse File<input type="file" th:field="*{logo}" th:value="*{logo}">
             </label>
           </div>
 
-        </form>
+        </div>
       </div>
 
 
@@ -132,14 +128,14 @@
             <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>
           </div>
           <div class="col-6">
-            <a href="#" class="btn btn-block btn-primary btn-md">Save company</a>
+            <input type="submit" class="btn btn-block btn-primary btn-md" value="Save company">
           </div>
         </div>
       </div>
     </div>
-    </form>
-  </div>
 
+  </div>
+  </form>
 </section>
 
 
@@ -149,7 +145,6 @@
 <!-- SCRIPTS -->
 <div th:insert="fragments::scripts">
 </div>
-
 
 
 </body>
