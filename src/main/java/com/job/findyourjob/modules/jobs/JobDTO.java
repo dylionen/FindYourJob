@@ -6,18 +6,16 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
-@Entity
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Job {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class JobDTO {
 
     private String email;
     private String jobTitle;
@@ -35,12 +33,10 @@ public class Job {
 
     private Timestamp applicationDeadline;
 
-    @OneToMany
-    private Set<Responsibility> responsibilities;
+
+    private List<String> responsibilities;
 
     private String educationExperience;
     private String otherBenifits;
 
-    @ManyToOne
-    private Company company;
 }
