@@ -109,13 +109,30 @@
                 </div>
               </div>
 
-              <div class="form-group">
-                <label>Job responsiblities</label>
-                <div id="responsibilities">
-                  <!-- <input type="text" class="form-control" id="job-location0" name="responsibilities[0]" placeholder="e.g. New York"> -->
-                  <input type="text" class="form-control" id="job-location1" name="responsibilities[1]" placeholder="e.g. New York">
+                <div class="form-group">
+                  <label>Job responsiblities</label>
+                  <div id="responsibilities">
+                    <input type="text" class="form-control" id="job-location1" name="responsibilities[0]" placeholder="Responsibility">
+                  </div>
+                  <button type="button" onclick="addNewResponsiblity()">+</button>
                 </div>
-                <button type="button" onclick="addNewResponsiblity()">+</button>
+
+
+              <div class="form-group">
+                <label>Education experience</label>
+                <div id="educationExperiences">
+                  <input type="text" class="form-control" id="educationExperiences1" name="educationExperience[0]" placeholder="Education Experience">
+                </div>
+                <button type="button" onclick="addNewEducationExperience()">+</button>
+              </div>
+
+
+              <div class="form-group">
+                <label>Ohter benefits</label>
+                <div id="otherBenefits">
+                  <input type="text" class="form-control" id="otherBenefits1" name="otherBenefits[0]" placeholder="Other Benefit">
+                </div>
+                <button type="button" onclick="addNewOtherBenefits()">+</button>
               </div>
 
 
@@ -153,8 +170,8 @@
                 <input type="text" class="form-control" id="company-website-tw" placeholder="@companyname">
               </div>
               <div class="form-group">
-                <label for="company-website-tw">Linkedin Username (Optional)</label>
-                <input type="text" class="form-control" id="company-website-tw" placeholder="companyname">
+                <label for="company-website-li">Linkedin Username (Optional)</label>
+                <input type="text" class="form-control" id="company-website-li" placeholder="companyname">
               </div>
 
               <div class="form-group">
@@ -204,14 +221,45 @@
     input.setAttribute("class","form-control");
     input.setAttribute("id","form-job-location" + resp.childNodes.length);
     input.setAttribute("name","responsibilities[" + resp.childNodes.length + "]");
-    input.setAttribute("placeholder","Necessitatibus quibusdam facilis");
+    input.setAttribute("placeholder","Responsibility");
+
+    insertAfter(input,  resp.lastElementChild);
+  }
+  function addNewEducationExperience(){
+    var resp = document.getElementById("educationExperiences");
+    console.log(resp.childNodes.length);
+
+    let input = document.createElement('input');
+    input.setAttribute("type","text");
+    input.setAttribute("class","form-control");
+    input.setAttribute("id","form-education-experience" + resp.childNodes.length);
+    input.setAttribute("name","educationExperience[" + resp.childNodes.length + "]");
+    input.setAttribute("placeholder","Education Experience");
+
+    insertAfter(input,  resp.lastElementChild);
+  }
+  function addNewOtherBenefits(){
+    var resp = document.getElementById("otherBenefits");
+    console.log(resp.childNodes.length);
+
+    let input = document.createElement('input');
+    input.setAttribute("type","text");
+    input.setAttribute("class","form-control");
+    input.setAttribute("id","form-other-benefit" + resp.childNodes.length);
+    input.setAttribute("name","otherBenifits[" + resp.childNodes.length + "]");
+    input.setAttribute("placeholder","Other Benefit");
 
     insertAfter(input,  resp.lastElementChild);
   }
 
+
+
+
   function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
   }
+
+
 
 </script>
 

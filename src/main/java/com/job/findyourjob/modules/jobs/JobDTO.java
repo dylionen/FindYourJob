@@ -1,13 +1,9 @@
 package com.job.findyourjob.modules.jobs;
 
-import com.job.findyourjob.modules.companies.Company;
-import com.job.findyourjob.modules.jobs.elements.Responsibility;
 import lombok.*;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
 
 @Getter
@@ -24,7 +20,6 @@ public class JobDTO {
     private String jobType;
     private String jobDescription;
 
-    private Timestamp publishedOn;
     private Integer vacancy;
     private String employmentStatus;
     private String experience;
@@ -33,10 +28,8 @@ public class JobDTO {
 
     private Timestamp applicationDeadline;
 
-
     private List<String> responsibilities;
-
-    private String educationExperience;
-    private String otherBenifits;
+    private List<String> educationExperience;
+    private List<String> otherBenefits;
 
 }

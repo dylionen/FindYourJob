@@ -1,7 +1,10 @@
 package com.job.findyourjob.modules.jobs;
 
 import com.job.findyourjob.modules.companies.Company;
+import com.job.findyourjob.modules.jobs.elements.EducationExperience;
+import com.job.findyourjob.modules.jobs.elements.OtherBenefits;
 import com.job.findyourjob.modules.jobs.elements.Responsibility;
+import com.job.findyourjob.modules.users.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,11 +38,18 @@ public class Job {
 
     private Timestamp applicationDeadline;
 
+    @ManyToOne
+    @JoinColumn(name = "created_by_id")
+    private User createdBy;
+
     @OneToMany
     private Set<Responsibility> responsibilities;
 
-    private String educationExperience;
-    private String otherBenifits;
+    @OneToMany
+    private Set<EducationExperience> educationExperiences;
+
+    @OneToMany
+    private Set<OtherBenefits> otherBenefits;
 
     @ManyToOne
     private Company company;
