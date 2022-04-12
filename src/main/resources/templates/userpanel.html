@@ -145,10 +145,71 @@
             </div>
         </div>
 
+
+
+
     </div>
 </section>
 
 
+
+<section class="site-section" id="jobs">
+    <div class="container">
+
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-7 text-center">
+                <h2 class="section-title mb-2">Your jobs</h2>
+            </div>
+        </div>
+
+        <ul class="job-listings mb-5" th:each="job: ${jobs}">
+            <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+                <div class="job-listing-logo">
+                    <img src="/images/job_logo_1.jpg" alt="Image" class="img-fluid">
+                </div>
+
+                <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                    <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                        <a th:href="@{/job/{id}(id=${job.id})}"><h2 th:text="${job.jobTitle}">Product Designer</h2></a>
+                        <strong th:text="${job.location}">Adidas</strong>
+                    </div>
+                    <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
+                        <p </p>
+                    </div>
+                    <div class="job-listing-meta">
+                        <span class="badge badge-danger" th:text="${job.jobType}">>Part Time</span>
+                    </div>
+                </div>
+
+            </li>
+
+        </ul>
+
+        <div class="row pagination-wrap">
+            <div class="col-md-6 text-center text-md-left mb-4 mb-md-0">
+                <span th:text="'Showing 1-' + ${jobs.size()}+''">Showing 1-7 Of 43,167 Jobs</span>
+                <a href="#" th:href="@{/job/add}" class="prev"><button class="btn btn-primary profile-button" type="button">New job</button></a>
+            </div>
+            <div class="col-md-6 text-center text-md-right">
+                <div class="custom-pagination ml-auto">
+
+                    <a href="#" class="prev">Prev</a>
+                    <div class="d-inline-block">
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                    </div>
+                    <a href="#" class="next">Next</a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</section>
 
 <!-- SCRIPTS -->
 <div th:insert="fragments::scripts">

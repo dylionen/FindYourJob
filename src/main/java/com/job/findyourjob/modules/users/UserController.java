@@ -2,7 +2,8 @@ package com.job.findyourjob.modules.users;
 
 import com.job.findyourjob.modules.companies.CompanyDTO;
 import com.job.findyourjob.modules.companies.CompanyService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.job.findyourjob.modules.jobs.JobDTO;
+import com.job.findyourjob.modules.jobs.JobService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +18,16 @@ import java.util.List;
 
 @Controller
 public class UserController {
-    @Autowired
-    UserService userService;
-    @Autowired
-    CompanyService companyService;
+
+    private final UserService userService;
+    private final CompanyService companyService;
+    private final JobService jobService;
+
+    public UserController(UserService userService, CompanyService companyService, JobService jobService) {
+        this.userService = userService;
+        this.companyService = companyService;
+        this.jobService = jobService;
+    }
 
     @GetMapping("/")
     public String getHomePage(Authentication authentication, Model model) {
@@ -35,7 +42,9 @@ public class UserController {
     @GetMapping("/user")
     public String userPanel(Model model, Principal principal) {
         List<CompanyDTO> companyDTOList = companyService.getCompaniesByUserName(principal.getName());
-        model.addAttribute("companies",companyDTOList);
+        List<JobDTO>  jobDTOS = jobService.getJobsByUserName(principal.getName());
+        model.addAttribute("companies", companyDTOList);
+        model.addAttribute("jobs", jobDTOS);
         return "userpanel";
     }
 

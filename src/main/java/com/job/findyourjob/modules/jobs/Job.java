@@ -9,6 +9,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Set;
 
 @Entity
@@ -42,15 +43,37 @@ public class Job {
     @JoinColumn(name = "created_by_id")
     private User createdBy;
 
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="job_id")
     private Set<Responsibility> responsibilities;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "job_id")
     private Set<EducationExperience> educationExperiences;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "job_id")
     private Set<OtherBenefits> otherBenefits;
 
     @ManyToOne
     private Company company;
+
+    public Job(JobDTO jobDTO) {
+
+        this.email = jobDTO.getEmail();
+        this.jobTitle = jobDTO.getJobTitle();
+        this.location = jobDTO.getLocation();
+        this.jobRegion = jobDTO.getJobRegion();
+        this.jobType = jobDTO.getJobType();
+        this.jobDescription = jobDTO.getJobDescription();
+
+        this.publishedOn = new Timestamp(Calendar.getInstance().getTimeInMillis());
+        this.vacancy = jobDTO.getVacancy();
+        this.employmentStatus = jobDTO.getEmploymentStatus();
+        this.experience = jobDTO.getExperience();
+        this.salary = jobDTO.getSalary();
+        this.gender = jobDTO.getGender();
+        this.applicationDeadline = jobDTO.getApplicationDeadline();
+    }
 }

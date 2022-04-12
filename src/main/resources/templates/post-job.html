@@ -138,48 +138,15 @@
 
 
               <h3 class="text-black my-5 border-bottom pb-2">Company Details</h3>
-              <div class="form-group">
+              <div class="form-group" th:each="cmp: ${companies}">
                 <label for="company-name">Company Name</label>
-                <input type="text" class="form-control" id="company-name" placeholder="e.g. New York">
+                <select class="selectpicker border rounded" id="company-name" th:field="${jobDTO.companyId}" data-style="btn-black" data-width="100%" data-live-search="true" title="Select company">
+                  <option value="asd" th:value="${cmp.id}" th:text="${cmp.companyName}">Anywhere</option>
+
+                </select>
+              </div>
               </div>
 
-              <div class="form-group">
-                <label for="company-tagline">Tagline (Optional)</label>
-                <input type="text" class="form-control" id="company-tagline" placeholder="e.g. New York">
-              </div>
-
-              <div class="form-group">
-                <label for="job-description">Company Description (Optional)</label>
-                <div class="editor" id="editor-2">
-                  <p>Description</p>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label for="company-website">Website (Optional)</label>
-                <input type="text" class="form-control" id="company-website" placeholder="https://">
-              </div>
-
-              <div class="form-group">
-                <label for="company-website-fb">Facebook Username (Optional)</label>
-                <input type="text" class="form-control" id="company-website-fb" placeholder="companyname">
-              </div>
-
-              <div class="form-group">
-                <label for="company-website-tw">Twitter Username (Optional)</label>
-                <input type="text" class="form-control" id="company-website-tw" placeholder="@companyname">
-              </div>
-              <div class="form-group">
-                <label for="company-website-li">Linkedin Username (Optional)</label>
-                <input type="text" class="form-control" id="company-website-li" placeholder="companyname">
-              </div>
-
-              <div class="form-group">
-                <label for="company-website-tw d-block">Upload Logo</label> <br>
-                <label class="btn btn-primary btn-md btn-file">
-                  Browse File<input type="file" hidden>
-                </label>
-              </div>
 
             </div>
           </div>
@@ -194,7 +161,7 @@
                 <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>
               </div>
               <div class="col-6">
-                <a href="#" class="btn btn-block btn-primary btn-md">Save Job</a>
+                <button type="submit" class="btn btn-block btn-primary btn-md" value="Save Job">
               </div>
             </div>
           </div>
