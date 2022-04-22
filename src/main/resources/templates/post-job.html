@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:insert="fragments::head">
 
 </head>
@@ -37,8 +38,10 @@
 
     
     <section class="site-section">
-      <div class="container">
+      <div class="container" th:object="${jobDTO}">
         <form method="post" action="/job/add" th:action="@{/job/add}">
+
+
 
         <div class="row align-items-center mb-5">
           <div class="col-lg-8 mb-4 mb-lg-0">
@@ -48,14 +51,15 @@
               </div>
             </div>
           </div>
+
           <div class="col-lg-4">
             <div class="row">
               <div class="col-6">
-                <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>
-              </div>
-              <div class="col-6">
-                <input type="submit" href="#" class="btn btn-block btn-primary btn-md" value="Save Job">
-                <input type="submit" formaction="/action_page2.php" href="#" class="btn btn-block btn-primary btn-md" value="Save TEST">
+                <!-- <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>-->
+               </div>
+               <div class="col-6">
+                 <button type="submit" class="btn btn-block btn-primary btn-md">Save Job</button>
+                 <!-- <input type="submit" formaction="/action_page2.php" href="#" class="btn btn-block btn-primary btn-md" value="Save TEST"> -->
               </div>
             </div>
           </div>
@@ -64,6 +68,12 @@
           <div class="col-lg-12">
             <div class="p-4 p-md-5 border rounded">
               <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
+
+              <div th:if="${#fields.hasAnyErrors()}"  class="alert alert-danger" role="alert">
+                <ul>
+                  <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                </ul>
+              </div>
               
               <div class="form-group">
                 <label for="company-website-tw d-block">Upload Featured Image</label> <br>
@@ -89,7 +99,6 @@
                 <label for="job-region">Job Region</label>
                 <select class="selectpicker border rounded" id="job-region" th:field="${jobDTO.jobRegion}" th:value="${jobDTO.jobRegion}" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Region">
                       <option value="asd">Anywhere</option>
-
                     </select>
               </div>
 
@@ -99,6 +108,36 @@
                   <option value="Part Time">Part Time</option>
                   <option value="Full Time">Full Time</option>
                 </select>
+              </div>
+
+              <div class="form-group">
+                <label for="vacancy">Vacancy</label>
+                <input type="number" class="form-control" id="vacancy" step="1" min="1" th:field="${jobDTO.vacancy}" th:value="${jobDTO.vacancy}"placeholder="e.g. 1">
+              </div>
+
+
+              <div class="form-group">
+                <label for="job-experience">Experience</label>
+                <input type="text" class="form-control" id="job-experience" th:field="${jobDTO.experience}" th:value="${jobDTO.experience}"placeholder="2 years minimum">
+              </div>
+
+              <div class="form-group">
+                <label for="job-salary">Salary</label>
+                <input type="text" class="form-control" id="job-salary" th:field="${jobDTO.salary}" th:value="${jobDTO.salary}"placeholder="5k euro">
+              </div>
+
+              <div class="form-group">
+                <label for="job-gender">Job Type</label>
+                <select class="selectpicker border rounded"  th:field="${jobDTO.gender}" th:value="${jobDTO.gender}" id="job-gender" data-style="btn-black" data-width="100%" data-live-search="true" title="Select gender">
+                  <option value="All">All</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="job-deadline">Deadline</label>
+                <input type="date" class="form-control" id="job-deadline" th:field="${jobDTO.applicationDeadline}" th:value="${jobDTO.applicationDeadline}">
               </div>
 
 
@@ -152,20 +191,21 @@
           </div>
 
          
-        </div>
+
         <div class="row align-items-center mb-5">
           
           <div class="col-lg-4 ml-auto">
             <div class="row">
               <div class="col-6">
-                <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>
+                <!-- <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a> -->
               </div>
               <div class="col-6">
-                <button type="submit" class="btn btn-block btn-primary btn-md" value="Save Job">
+                <button type="submit" class="btn btn-block btn-primary btn-md">Save Job</button>
               </div>
             </div>
           </div>
         </div>
+
         </form>
       </div>
     </section>
@@ -213,7 +253,7 @@
     input.setAttribute("type","text");
     input.setAttribute("class","form-control");
     input.setAttribute("id","form-other-benefit" + resp.childNodes.length);
-    input.setAttribute("name","otherBenifits[" + resp.childNodes.length + "]");
+    input.setAttribute("name","otherBenefits[" + resp.childNodes.length + "]");
     input.setAttribute("placeholder","Other Benefit");
 
     insertAfter(input,  resp.lastElementChild);

@@ -4,10 +4,11 @@ import com.job.findyourjob.modules.companies.CompanyDTO;
 import com.job.findyourjob.modules.companies.CompanyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -24,20 +25,37 @@ public class JobController {
     }
 
     @GetMapping("/add")
-    public String newJob(Model model,Principal principal) {
+    public String newJob(Model model, Principal principal) {
         JobDTO jobDTO = new JobDTO();
         model.addAttribute("jobDTO", jobDTO);
 
         List<CompanyDTO> companyDTOList = companyService.getCompaniesByUserName(principal.getName());
-        model.addAttribute("companies",companyDTOList);
+        model.addAttribute("companies", companyDTOList);
         return "post-job";
     }
 
     @PostMapping("/add")
-    public String createJob(JobDTO jobDTO, Model model, Principal principal) {
-        System.out.println(jobDTO);
-        jobService.createJob(jobDTO,principal);
+    public String createJob(@Valid @ModelAttribute("jobDTO") JobDTO jobDTO, BindingResult bindingResult, Model model, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("jobDTO", jobDTO);
+            List<CompanyDTO> companyDTOList = companyService.getCompaniesByUserName(principal.getName());
+            model.addAttribute("companies", companyDTOList);
+            return "post-job";
+        }
+        jobService.createJob(jobDTO, principal);
         return "redirect:/user";
 
     }
+
+    @GetMapping("/{id}")
+    public String getCurrentJob(@PathVariable Long id, Model model, Principal principal) {
+        Job job = jobService.getJobById(id);
+        //System.out.println(job);
+        if (job == null) {
+            throw new RuntimeException("Job offer not exists");
+        }
+        model.addAttribute("job", job);
+        return "job-single";
+    }
+
 }

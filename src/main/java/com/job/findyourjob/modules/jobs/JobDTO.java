@@ -2,6 +2,7 @@ package com.job.findyourjob.modules.jobs;
 
 import lombok.*;
 
+import javax.validation.constraints.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,17 @@ import java.util.List;
 @ToString
 public class JobDTO {
     private Long id;
+
+    @NotEmpty(message = "Email must not be empty")
+    @Email(message = "Email should be valid")
     private String email;
+
+    @NotEmpty(message = "Title must not be empty")
     private String jobTitle;
+
+
     private String location;
+
     private String jobRegion;
     private String jobType;
     private String jobDescription;
@@ -27,12 +36,13 @@ public class JobDTO {
     private String salary;
     private String gender;
 
-    private Timestamp applicationDeadline;
+    private String applicationDeadline;
 
     private List<String> responsibilities;
     private List<String> educationExperience;
     private List<String> otherBenefits;
 
+    @NotNull(message = "Company must not be empty")
     private Long companyId;
 
     public JobDTO(Job job) {
@@ -50,7 +60,7 @@ public class JobDTO {
         this.salary = job.getSalary();
         this.gender = job.getGender();
 
-        this.applicationDeadline = job.getApplicationDeadline();
+        this.applicationDeadline = String.valueOf(job.getApplicationDeadline());
 
         this.responsibilities = new ArrayList<>();
         job.getResponsibilities().stream().forEach(responsibility -> this.responsibilities.add(responsibility.getValue()));

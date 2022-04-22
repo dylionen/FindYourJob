@@ -10,6 +10,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -74,6 +75,6 @@ public class Job {
         this.experience = jobDTO.getExperience();
         this.salary = jobDTO.getSalary();
         this.gender = jobDTO.getGender();
-        this.applicationDeadline = jobDTO.getApplicationDeadline();
+        //this.applicationDeadline = new Timestamp(new Date(jobDTO.getApplicationDeadline()).getTime());
     }
 }
