@@ -4,6 +4,8 @@ import com.job.findyourjob.modules.companies.CompanyRepository;
 import com.job.findyourjob.modules.jobs.elements.EducationExperience;
 import com.job.findyourjob.modules.jobs.elements.OtherBenefits;
 import com.job.findyourjob.modules.jobs.elements.Responsibility;
+import com.job.findyourjob.modules.jobs.liked.Liked;
+import com.job.findyourjob.modules.jobs.liked.LikedRepository;
 import com.job.findyourjob.modules.users.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,13 +17,15 @@ import java.util.*;
 public class JobService {
     public final JobRepository jobRepository;
     public final UserRepository userRepository;
-
     public final CompanyRepository companyRepository;
 
-    public JobService(JobRepository jobRepository, UserRepository userRepository, CompanyRepository companyRepository) {
+    public final LikedRepository likedRepository;
+
+    public JobService(JobRepository jobRepository, UserRepository userRepository, CompanyRepository companyRepository, LikedRepository likedRepository) {
         this.jobRepository = jobRepository;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
+        this.likedRepository = likedRepository;
     }
 
     @Transactional
@@ -71,5 +75,24 @@ public class JobService {
 
     public Job getJobById(Long id) {
         return jobRepository.getById(id);
+    }
+
+    public Optional<Job> getOptionalJobByID(Long id) {
+        return jobRepository.getJobById(id);
+    }
+
+    @Transactional
+    public void deleteOrInsertNewLiked(Long jobId, String userName) {
+        Optional<Liked> liked = likedRepository.getLikedByJobIdAndUserName(jobId, userName);
+        System.out.println(liked.isPresent());
+        liked.ifPresentOrElse(liked1 -> likedRepository.delete(liked1), () ->
+                likedRepository.save(
+                        new Liked(jobRepository.getById(jobId), userRepository.getUserByUserName(userName))
+                ));
+    }
+
+
+    public boolean isLiked(Long jobId, String userName) {
+        return likedRepository.getLikedByJobIdAndUserName(jobId, userName).isPresent();
     }
 }

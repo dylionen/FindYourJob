@@ -2,9 +2,7 @@ package com.job.findyourjob.modules.jobs;
 
 import com.job.findyourjob.modules.companies.CompanyDTO;
 import com.job.findyourjob.modules.companies.CompanyService;
-import com.job.findyourjob.modules.jobs.liked.Liked;
 import com.job.findyourjob.modules.jobs.liked.LikedRepository;
-import com.job.findyourjob.modules.users.User;
 import com.job.findyourjob.modules.users.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,20 +54,19 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public String getCurrentJob(@PathVariable Long id, Model model, Principal principal) {
-        Job job = jobService.getJobById(id);
-        User user = userService.getUserByUserName(principal.getName());
-        //System.out.println(job);
-        if (job == null) {
-            throw new RuntimeException("Job offer not exists");
-        }
+    public String getCurrentJob(@RequestParam(required = false, defaultValue = "false") Boolean changeSave, @PathVariable Long id, Model model, Principal principal) {
+        if (changeSave)
+            jobService.deleteOrInsertNewLiked(id, principal.getName());
 
-        Liked liked = likedRepository.getLikedByUserAndJob(user, job);
-        System.out.println(liked);
-        Boolean likedByUser = liked != null;
+        Optional<Job> job = jobService.getOptionalJobByID(id);
 
-        model.addAttribute("job", job);
+        if (job.isEmpty())
+            return "error";
+
+        boolean liked = jobService.isLiked(id, principal.getName());
+
         model.addAttribute("liked", liked);
+        model.addAttribute("job", job.get());
         return "job-single";
     }
 

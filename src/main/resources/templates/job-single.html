@@ -60,10 +60,13 @@
                 <div class="col-lg-4" sec:authorize="isAuthenticated()">
                     <div class="row">
                         <div class="col-6">
-                            <a href="#" class="btn btn-block btn-light btn-md"><span
-                                    class="icon-heart-o mr-2 text-danger"></span>Save Job</a>
+                            <a href="#" th:href="@{/job/{id}(id = ${job.id},changeSave=true)}"  class="btn btn-block btn-light btn-md"><span
+                                    class="icon-heart-o mr-2 text-danger"></span>
+                                <span th:if="${liked == true}">Saved</span>
+                                <span th:if="${liked == false}">Save Job</span>
+                            </a>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6" >
                             <a href="#" class="btn btn-block btn-primary btn-md">Apply Now</a>
                         </div>
                     </div>
@@ -115,11 +118,11 @@
 
                     <div class="row mb-5" sec:authorize="isAuthenticated()">
                         <div class="col-6" th:if="${liked == false}">
-                            <a href="#" class="btn btn-block btn-light btn-md"><span
+                            <a href="#"  class="btn btn-block btn-light btn-md"><span
                                     class="icon-heart-o mr-2 text-danger"></span>Save Job</a>
                         </div>
 
-                        <div class="col-6" th:if="${liked == true}">
+                        <div class="col-6" th:if="${liked == true }">
                             <a href="#" class="btn btn-block btn-light btn-md"><span
                                     class="icon-heart-o mr-2 text-danger"></span>Saved</a>
                         </div>

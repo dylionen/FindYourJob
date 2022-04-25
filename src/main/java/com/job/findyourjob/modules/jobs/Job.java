@@ -4,6 +4,7 @@ import com.job.findyourjob.modules.companies.Company;
 import com.job.findyourjob.modules.jobs.elements.EducationExperience;
 import com.job.findyourjob.modules.jobs.elements.OtherBenefits;
 import com.job.findyourjob.modules.jobs.elements.Responsibility;
+import com.job.findyourjob.modules.jobs.liked.Liked;
 import com.job.findyourjob.modules.users.User;
 import lombok.*;
 
@@ -56,6 +57,10 @@ public class Job {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "job_id")
     private Set<OtherBenefits> otherBenefits;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private Set<Liked> likedSet;
 
     @ManyToOne
     private Company company;
