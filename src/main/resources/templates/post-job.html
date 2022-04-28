@@ -142,9 +142,10 @@
 
 
               <div class="form-group">
-                <label for="job-description">Job Description</label>
-                <div class="editor" id="editor-1">
-                  <p>Write Job Description!</p>
+                <label for="job-description">Job Description (Optional)</label>
+                <div class="editor">
+              <textarea class="form-control" style="resize: none;" rows="14" cols="50" name="body"
+                        th:field="*{jobDescription}" th:value="*{jobDescription}" id="job-description"/>
                 </div>
               </div>
 

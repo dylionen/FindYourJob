@@ -79,14 +79,9 @@
                                                   class="img-fluid rounded"></figure>
                         <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span
                                 class="icon-align-left mr-3"></span>Job Description</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis illum fuga eveniet.
-                            Deleniti asperiores, commodi quae ipsum quas est itaque, ipsa, dolore beatae voluptates nemo
-                            blanditiis iste eius officia minus.</p>
-                        <p>Velit unde aliquam et voluptas reiciendis non sapiente labore, deleniti asperiores blanditiis
-                            nihil quia officiis dolor vero iste dolore vel molestiae saepe. Id nisi, consequuntur sunt
-                            impedit quidem, vitae mollitia!</p>
+                        <p th:text="*{jobDescription}">Lorem ipsum dolor sit amet.</p>
                     </div>
-                    <div class="mb-5" th:if="*{responsibilities}">
+                    <div class="mb-5" th:if="*{responsibilities.size()>0}">
                         <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span
                                 class="icon-rocket mr-3"></span>Responsibilities</h3>
                         <ul class="list-unstyled m-0 p-0" th:each="resp: *{responsibilities}">
@@ -96,7 +91,7 @@
                         </ul>
                     </div>
 
-                    <div class="mb-5" th:if="*{educationExperiences}">
+                    <div class="mb-5" th:if="*{educationExperiences.size()>0}">
                         <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-book mr-3"></span>Education
                             + Experience</h3>
                         <ul class="list-unstyled m-0 p-0" th:each="ed: *{educationExperiences}">
@@ -106,7 +101,7 @@
                         </ul>
                     </div>
 
-                    <div class="mb-5" th:if="*{otherBenefits}">
+                    <div class="mb-5" th:if="*{otherBenefits.size()>0}">
                         <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span
                                 class="icon-turned_in mr-3"></span>Other Benifits</h3>
                         <ul class="list-unstyled m-0 p-0" th:each="oth: *{otherBenefits}">
@@ -138,7 +133,7 @@
                         <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Job Summary</h3>
                         <ul class="list-unstyled pl-3 mb-0">
                             <li class="mb-2"><strong class="text-black">Published on:</strong> <span
-                                    th:text="*{publishedOn}">April 14, 2019</span></li>
+                                    th:text="*{getPublishedOnFormat()}">April 14, 2019</span></li>
                             <li class="mb-2"><strong class="text-black">Vacancy:</strong> <span th:text="*{vacancy}"></span>
                             </li>
                             <li class="mb-2"><strong class="text-black">Employment Status:</strong> <span
@@ -152,7 +147,7 @@
                             <li class="mb-2"><strong class="text-black">Gender:</strong><span th:text="*{gender}"></span>
                             </li>
                             <li class="mb-2"><strong class="text-black">Application Deadline:</strong> <span
-                                    th:text="*{applicationDeadline}"></span></li>
+                                    th:text="*{getDeadlineOnFormat()}"></span></li>
                         </ul>
                     </div>
 

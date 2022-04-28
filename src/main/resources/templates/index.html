@@ -179,7 +179,11 @@
 
             <div class="row pagination-wrap">
                 <div class="col-md-6 text-center text-md-left mb-4 mb-md-0">
-                    <span>Showing <span th:text="${(jobs.number +1)}"></span>   - <span th:text="${(jobs.number +1)} * ${jobs.size}"></span> Of <span th:text="${jobs.totalElements}">43,167</span> Jobs</span>
+                    <span>Showing <span th:text="${(jobs.number)} * ${(pageSize)} + 1"></span>   -
+
+                        <span th:if="${(jobs.number +1)} * ${jobs.size}<${jobs.totalElements}" th:text="${(jobs.number +1)} * ${jobs.size}"></span>
+                        <span th:if="${(jobs.number +1)} * ${jobs.size}>=${jobs.totalElements}" th:text="${jobs.totalElements}"></span>
+                        Of <span th:text="${jobs.totalElements}">43,167</span> Jobs</span>
                 </div>
                 <div class="col-md-6 text-center text-md-right">
                     <div class="custom-pagination ml-auto">

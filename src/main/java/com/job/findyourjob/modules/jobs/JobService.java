@@ -1,5 +1,6 @@
 package com.job.findyourjob.modules.jobs;
 
+import antlr.StringUtils;
 import com.job.findyourjob.modules.companies.CompanyRepository;
 import com.job.findyourjob.modules.jobs.elements.EducationExperience;
 import com.job.findyourjob.modules.jobs.elements.OtherBenefits;
@@ -15,7 +16,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Predicate;
 
 @Service
 public class JobService {
@@ -39,6 +45,7 @@ public class JobService {
 
     @Transactional
     void createJob(JobDTO jobDTO, Principal principal) {
+
         Job job = new Job(jobDTO);
         job.setCreatedBy(userRepository.getUserByUserName(principal.getName()));
         Set<EducationExperience> educationExperiences = new HashSet<>();
@@ -47,17 +54,17 @@ public class JobService {
 
         jobDTO.getEducationExperience()
                 .stream()
-                .filter(Objects::nonNull)
+                .filter(Objects::nonNull).filter(Predicate.not(String::isEmpty))
                 .forEach(s -> educationExperiences.add(new EducationExperience(s)));
 
         jobDTO.getOtherBenefits()
                 .stream()
-                .filter(Objects::nonNull)
+                .filter(Objects::nonNull).filter(Predicate.not(String::isEmpty))
                 .forEach(s -> otherBenefits.add(new OtherBenefits(s)));
 
         jobDTO.getResponsibilities()
                 .stream()
-                .filter(Objects::nonNull)
+                .filter(Objects::nonNull).filter(Predicate.not(String::isEmpty))
                 .forEach(s -> responsibilities.add(new Responsibility(s)));
 
 
@@ -67,6 +74,13 @@ public class JobService {
 
         job.setCompany(companyRepository.getById(jobDTO.getCompanyId()));
 
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date fd = formatter.parse(jobDTO.getApplicationDeadline());
+            job.setApplicationDeadline(new Timestamp(fd.getTime()));
+        } catch (ParseException e) {
+           // throw new RuntimeException(e);
+        }
         jobRepository.save(job);
     }
 
@@ -101,7 +115,7 @@ public class JobService {
     }
 
     public List<Job> getAllJobs() {
-        return jobRepository.findAllByOrderByIdDesc();
+        return jobRepository.findAllByActiveIsTrueOrderByIdDesc();
     }
 
     public Page<Job> findPaginatedJobs(Pageable pageable) {

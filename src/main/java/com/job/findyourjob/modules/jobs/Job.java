@@ -10,7 +10,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -65,6 +68,26 @@ public class Job {
 
     @ManyToOne
     private Company company;
+
+    public String getPublishedOnFormat() {
+        try {
+            Date date = new Date(publishedOn.getTime());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return dateFormat.format(date);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public String getDeadlineOnFormat() {
+        try {
+            Date date = new Date(applicationDeadline.getTime());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return dateFormat.format(date);
+        } catch (Exception e) {
+            return "";
+        }
+    }
 
     public Job(JobDTO jobDTO) {
 

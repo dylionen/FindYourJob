@@ -45,14 +45,15 @@ public class UserController {
         //model.addAttribute("jobs",jobService.getAllJobServices());
 
         int currentPage = page.orElse(1);
-        int pageSize = 2;
+        int pageSize = 3;
 
 
-        Page<Job> bookPage = jobService.findPaginatedJobs(PageRequest.of(currentPage - 1, pageSize));
+        Page<Job> pages = jobService.findPaginatedJobs(PageRequest.of(currentPage - 1, pageSize));
 
-        model.addAttribute("jobs", bookPage);
+        model.addAttribute("jobs", pages);
+        model.addAttribute("pageSize", pageSize);
 
-        int totalPages = bookPage.getTotalPages();
+        int totalPages = pages.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                     .boxed()
