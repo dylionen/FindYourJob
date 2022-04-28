@@ -7,6 +7,10 @@ import com.job.findyourjob.modules.jobs.elements.Responsibility;
 import com.job.findyourjob.modules.jobs.liked.Liked;
 import com.job.findyourjob.modules.jobs.liked.LikedRepository;
 import com.job.findyourjob.modules.users.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,5 +98,30 @@ public class JobService {
 
     public boolean isLiked(Long jobId, String userName) {
         return likedRepository.getLikedByJobIdAndUserName(jobId, userName).isPresent();
+    }
+
+    public List<Job> getAllJobs() {
+        return jobRepository.findAllByOrderByIdDesc();
+    }
+
+    public Page<Job> findPaginatedJobs(Pageable pageable) {
+        List<Job> jobs = getAllJobs();
+        System.out.println(jobs.size());
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<Job> list;
+
+        if (jobs.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, jobs.size());
+            list = jobs.subList(startItem, toIndex);
+        }
+
+        Page<Job> jobPage
+                = new PageImpl<Job>(list, PageRequest.of(currentPage, pageSize), jobs.size());
+
+        return jobPage;
     }
 }

@@ -86,7 +86,7 @@
                             nihil quia officiis dolor vero iste dolore vel molestiae saepe. Id nisi, consequuntur sunt
                             impedit quidem, vitae mollitia!</p>
                     </div>
-                    <div class="mb-5">
+                    <div class="mb-5" th:if="*{responsibilities}">
                         <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span
                                 class="icon-rocket mr-3"></span>Responsibilities</h3>
                         <ul class="list-unstyled m-0 p-0" th:each="resp: *{responsibilities}">
@@ -96,7 +96,7 @@
                         </ul>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-5" th:if="*{educationExperiences}">
                         <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-book mr-3"></span>Education
                             + Experience</h3>
                         <ul class="list-unstyled m-0 p-0" th:each="ed: *{educationExperiences}">
@@ -106,7 +106,7 @@
                         </ul>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-5" th:if="*{otherBenefits}">
                         <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span
                                 class="icon-turned_in mr-3"></span>Other Benifits</h3>
                         <ul class="list-unstyled m-0 p-0" th:each="oth: *{otherBenefits}">

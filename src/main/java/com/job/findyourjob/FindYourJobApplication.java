@@ -43,6 +43,3 @@ public class FindYourJobApplication {
     }
 
 }
-
-
-// TODO: 09.04.2022 edycja profilu, edycja jobs i companies

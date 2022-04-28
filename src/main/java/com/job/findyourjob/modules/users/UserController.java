@@ -2,8 +2,11 @@ package com.job.findyourjob.modules.users;
 
 import com.job.findyourjob.modules.companies.CompanyDTO;
 import com.job.findyourjob.modules.companies.CompanyService;
+import com.job.findyourjob.modules.jobs.Job;
 import com.job.findyourjob.modules.jobs.JobDTO;
 import com.job.findyourjob.modules.jobs.JobService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +14,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class UserController {
@@ -30,11 +37,28 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String getHomePage(Authentication authentication, Model model) {
+    public String getHomePage(@RequestParam(defaultValue = "1") Optional<Integer> page, Authentication authentication, Model model) {
         if (authentication != null) {
             model.addAttribute(authentication);
         }
-        model.addAttribute("welcomeMessage", "welcomeMessage");
+
+        //model.addAttribute("jobs",jobService.getAllJobServices());
+
+        int currentPage = page.orElse(1);
+        int pageSize = 2;
+
+
+        Page<Job> bookPage = jobService.findPaginatedJobs(PageRequest.of(currentPage - 1, pageSize));
+
+        model.addAttribute("jobs", bookPage);
+
+        int totalPages = bookPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
 
         return "index";
     }

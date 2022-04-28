@@ -10,5 +10,6 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
     List<Job> getJobsByCreatedBy(User createdBy);
 
+    List<Job> findAllByOrderByIdDesc();
     Optional<Job> getJobById(Long id);
 }

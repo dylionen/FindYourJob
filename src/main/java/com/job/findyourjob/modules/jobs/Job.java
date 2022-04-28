@@ -11,7 +11,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -41,13 +40,15 @@ public class Job {
 
     private Timestamp applicationDeadline;
 
+    private Boolean active;
+
     @ManyToOne
     @JoinColumn(name = "created_by_id")
     private User createdBy;
 
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="job_id")
+    @JoinColumn(name = "job_id")
     private Set<Responsibility> responsibilities;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -80,6 +81,7 @@ public class Job {
         this.experience = jobDTO.getExperience();
         this.salary = jobDTO.getSalary();
         this.gender = jobDTO.getGender();
+        this.active = true;
         //this.applicationDeadline = new Timestamp(new Date(jobDTO.getApplicationDeadline()).getTime());
     }
 }
