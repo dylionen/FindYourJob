@@ -1,5 +1,6 @@
 package com.job.findyourjob.modules.users;
 
+import com.job.findyourjob.configurations.SecurityConfiguration;
 import com.job.findyourjob.modules.companies.CompanyDTO;
 import com.job.findyourjob.modules.companies.CompanyService;
 import com.job.findyourjob.modules.jobs.Job;
@@ -45,7 +46,7 @@ public class UserController {
         //model.addAttribute("jobs",jobService.getAllJobServices());
 
         int currentPage = page.orElse(1);
-        int pageSize = 3;
+        int pageSize = SecurityConfiguration.JOBS_PER_PAGE;
 
 
         Page<Job> pages = jobService.findPaginatedJobs(PageRequest.of(currentPage - 1, pageSize));
@@ -67,7 +68,7 @@ public class UserController {
     @GetMapping("/user")
     public String userPanel(Model model, Principal principal) {
         List<CompanyDTO> companyDTOList = companyService.getCompaniesByUserName(principal.getName());
-        List<JobDTO>  jobDTOS = jobService.getJobsByUserName(principal.getName());
+        List<JobDTO> jobDTOS = jobService.getJobsByUserName(principal.getName());
         model.addAttribute("companies", companyDTOList);
         model.addAttribute("jobs", jobDTOS);
         return "userpanel";

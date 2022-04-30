@@ -1,9 +1,11 @@
 package com.job.findyourjob.modules.companies;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.File;
 
 @Getter
 @Setter
@@ -24,7 +26,7 @@ public class CompanyDTO {
     private String companyWebsiteTw;
     private String companyWebsiteLi;
 
-    private String Logo;
+    private MultipartFile logo;
 
     public CompanyDTO(Company company){
         this.id = company.getId();
@@ -35,6 +37,6 @@ public class CompanyDTO {
         this.companyWebsiteFb = company.getCompanyWebsiteFb();
         this.companyWebsiteTw = company.getCompanyWebsiteTw();
         this.companyWebsiteLi = company.getCompanyWebsiteLi();
-        this.Logo = company.getLogo();
+        //this.Logo = company.getLogo();
     }
 }

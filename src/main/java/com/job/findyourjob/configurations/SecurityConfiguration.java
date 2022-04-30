@@ -52,4 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    public static final int JOBS_PER_PAGE = 7;
+    public static final String UPLOAD_DIR = "C:/Uploads/";
 }

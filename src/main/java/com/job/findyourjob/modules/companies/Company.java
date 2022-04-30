@@ -56,7 +56,7 @@ public class Company {
         this.companyWebsiteTw = companyDTO.getCompanyWebsiteTw();
         this.companyWebsiteLi = companyDTO.getCompanyWebsiteLi();
 
-        this.Logo = companyDTO.getLogo();
+        //this.Logo = companyDTO.getLogo();
 
         this.createdDate = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
